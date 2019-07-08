@@ -6,7 +6,7 @@ const serverParams = {
     root: path.resolve('./'),
     port: 5555,
     open: false,
-    logLevel: 2
+    logLevel: 1
 };
 
 //To Launch the OpenFin Application we need a manifestUrl.
@@ -15,7 +15,7 @@ const manifestUrl = `http://localhost:${serverParams.port}/app.json`;
 //Start the server server
 const server = httpServer.createServer(serverParams);
 server.listen(serverParams.port);
-(async() => {
+(async () => {
     try {
         console.log(manifestUrl);
         //Once the server is running we can launch OpenFin and retrieve the port.
@@ -26,7 +26,7 @@ server.listen(serverParams.port);
             uuid: 'server-connection', //Supply an addressable Id for the connection
             address: `ws://localhost:${port}`, //Connect to the given port.
             nonPersistent: true //We want OpenFin to exit as our application exists.
-        });
+        });        
 
         //Once OpenFin exists we shut down the server.
         fin.once('disconnected', process.exit);
