@@ -6,7 +6,8 @@ const serverParams = {
     root: path.resolve('./'),
     port: 5555,
     open: false,
-    logLevel: 2
+    logLevel: 2,
+    proxy: 'http://localhost:9090/debugger-ui'
 };
 
 //To Launch the OpenFin Application we need a manifestUrl.
@@ -19,7 +20,10 @@ server.listen(serverParams.port);
     try {
         console.log(manifestUrl);
         //Once the server is running we can launch OpenFin and retrieve the port.
-        const port = await launch({ manifestUrl });
+        const port = await launch({ 
+            manifestUrl,
+            
+        });
 
         //We will use the port to connect from Node to determine when OpenFin exists.
         const fin = await connect({
