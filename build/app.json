@@ -11,7 +11,7 @@
     },
     "runtime": {
         "arguments": "--remote-debugging-port=9090 --inspect",
-        "version": "10.66.41.18"
+        "version": "stable"
     },
     "shortcut": {
         "company": "OpenFin",
