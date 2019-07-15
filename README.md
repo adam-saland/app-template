@@ -1,4 +1,4 @@
-# Tiler Implementation
+# Window Centering demo
 
 ### How to use this:
 
