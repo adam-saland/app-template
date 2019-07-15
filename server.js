@@ -1,36 +1,23 @@
-const httpServer = require('http-server');
+const openfinLauncher = require('hadouken-js-adapter');
+const express = require('express');
+const http = require('http');
 const path = require('path');
-const { launch, connect } = require('hadouken-js-adapter');
 
-const serverParams = {
-    root: path.resolve('./'),
-    port: 5555,
-    open: false,
-    logLevel: 1
-};
+const port = process.env.PORT || 5555;
 
-//To Launch the OpenFin Application we need a manifestUrl.
-const manifestUrl = `http://localhost:${serverParams.port}/app.json`;
+const configs = ['app.json'];
 
-//Start the server server
-const server = httpServer.createServer(serverParams);
-server.listen(serverParams.port);
-(async () => {
-    try {
-        console.log(manifestUrl);
-        //Once the server is running we can launch OpenFin and retrieve the port.
-        const port = await launch({ manifestUrl });
+const app = express();
+app.use(express.static('./build'));
 
-        //We will use the port to connect from Node to determine when OpenFin exists.
-        const fin = await connect({
-            uuid: 'server-connection', //Supply an addressable Id for the connection
-            address: `ws://localhost:${port}`, //Connect to the given port.
-            nonPersistent: true //We want OpenFin to exit as our application exists.
-        });        
-
-        //Once OpenFin exists we shut down the server.
-        fin.once('disconnected', process.exit);
-    } catch (err) {
-        console.error(err);
+http.createServer(app).listen(port, async function(){
+    console.log('Express server listening on port ' + port);
+    for (let i=0; i<configs.length; i++) {
+        const c = configs[i];
+        const confPath  = path.resolve(c);
+        openfinLauncher.launch({ manifestUrl: confPath})
+            .then(() => console.log(`app: ${c} started`))
+            .catch(err => console.error(`error running app: ${c}`, err));
     }
-})();
+});
+

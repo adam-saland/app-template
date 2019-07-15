@@ -1,11 +1,30 @@
 {
   "name": "openfin-template",
   "version": "0.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc -p .",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check",
+    "build": "webpack",
+    "start": "node server.js",
+    "all": "npm run clean && npm run build && npm run start"
+  },
   "devDependencies": {
-    "@types/openfin": "^34.0.0",
-    "hadouken-js-adapter": "^0.34.3",
+    "@types/openfin": "^41.0.0",
+    "copy-webpack-plugin": "^5.0.3",
+    "express": "^4.16.4",
+    "gts": "^0.9.0",
+    "hadouken-js-adapter": "^0.41.1",
     "http-server": "^0.11.1",
-    "lit-html": "^1.0.0"
+    "ts-loader": "^6.0.0",
+    "typescript": "~3.1.0",
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2"
   },
   "license": "Apache-2.0"
 }
