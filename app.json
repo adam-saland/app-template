@@ -1,4 +1,5 @@
 {
+    "devtools_port": 9090,
     "startup_app": {
         "name": "OpenfinPOC",
         "url": "http://localhost:5555/index.html",
@@ -8,8 +9,8 @@
         "saveWindowState": true
     },
     "runtime": {
-        "arguments": "",
-        "version": "canary"
+        "arguments": "--remote-devtools-port=9090",
+        "version": "stable"
     },
     "shortcut": {
         "company": "OpenFin",
