@@ -1,8 +1,14 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disablereact/prop-types */
+/* eslint-disableno-shadow */
+/* eslint-disableno-undef */
+/* eslint-disable react/no-typos */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import WindowButton from './components/WindowButton';
 
-const App = ({ title, fin }) => {
-  /* eslint-disable */
+function App({ title, fin }) {
   const [version, setVersion] = useState('');
   useEffect(() => {
     fin.System.getVersion().then(v => setVersion(v));
@@ -14,35 +20,23 @@ const App = ({ title, fin }) => {
         Version:
         {version}
       </h3>
-      <button
-        onClick={() => {
-          fin.Window.create({
-            name: 'BundleAnalyzer',
-            url: `http://${location.host}/report.html`,
-            target: fin.Window.me,
-          });
-        }}
-      >
-        Analyze WebPack Bundle!
-      </button>
-      <button
-        onClick={() => {
-          fin.Window.create({
-            name: 'BundleVisualizer',
-            url: `http://${location.host}/stats.html`,
-            target: fin.Window.me,
-          })
-        }}
-      >
-        Visualize WebPack Bundle!
-      </button>
+      <WindowButton
+        name="Analyze"
+        url={`http://${location.host}/report.html`}
+        btnText="Analyze WebPack Bundle!"
+      />
+      <WindowButton
+        name="Visualize"
+        url={`http://${location.host}/stats.html`}
+        btnText="Visualize WebPack Bundle!"
+      />
     </div>
   );
-};
-/* eslint-disable */
+}
+
 App.propTypes = {
   title: PropTypes.string.isRequired,
-  fin: PropTypes.any,
+  fin: PropTypes.object.isRequired,
 };
 
 export default App;
