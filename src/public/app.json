@@ -5,6 +5,7 @@
         "url": "http://localhost:8080/index.html",
         "uuid": "OpenfinPOC",
         "autoShow": true,
+        "autoCenter": true,
         "saveWindowState": false
     },
     "runtime": {

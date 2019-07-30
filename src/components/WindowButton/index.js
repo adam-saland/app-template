@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-restricted-globals */
@@ -9,14 +11,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // eslint-disable-next-line import/extensions
-import {windowBtnStyles} from './windowButton.css.js';
+import {btn} from './index.css.js';
 
 function WindowButton({ name, url, btnText, ...props }) {
   const handleClick = async (name, url) => {
-    await fin.Window.create({name, url});
+    const currentWin = await fin.Window.create({name, url, autoShow: true, frame: false});
+    console.log("Window:", currentWin.identity)
   };
   return (
-    <button type="button" style={windowBtnStyles} onClick={() => handleClick(name, url)}>
+    <button type="button" style={btn} onClick={() => handleClick(name, url)} {...props}>
       {btnText}
     </button>
   );

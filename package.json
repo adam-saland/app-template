@@ -53,6 +53,7 @@
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
+    "@types/openfin": "^43.0.1",
     "copy-webpack-plugin": "^5.0.4",
     "express": "^4.17.1",
     "hadouken-js-adapter": "^1.43.1",

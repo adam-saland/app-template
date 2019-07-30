@@ -1,8 +1,8 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react/forbid-prop-types */
-/* eslint-disablereact/prop-types */
-/* eslint-disableno-shadow */
-/* eslint-disableno-undef */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-shadow */
+/* eslint-disable no-undef */
 /* eslint-disable react/no-typos */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
@@ -11,8 +11,12 @@ import WindowButton from './components/WindowButton';
 function App({ title, fin }) {
   const [version, setVersion] = useState('');
   useEffect(() => {
-    fin.System.getVersion().then(v => setVersion(v));
+    (async () => {
+      const v = await fin.System.getVersion();
+      setVersion(v);
+    })();
   }, []);
+  // eslint-disable-next-line prettier/prettier
   return (
     <div className="main">
       <h1>{title}</h1>
@@ -21,11 +25,13 @@ function App({ title, fin }) {
         {version}
       </h3>
       <WindowButton
+        uuid={fin.Window.me.uuid}
         name="Analyze"
         url={`http://${location.host}/report.html`}
         btnText="Analyze WebPack Bundle!"
       />
       <WindowButton
+        uuid={fin.Window.me.uuid}
         name="Visualize"
         url={`http://${location.host}/stats.html`}
         btnText="Visualize WebPack Bundle!"
