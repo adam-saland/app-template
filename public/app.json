@@ -8,7 +8,7 @@
         "saveWindowState": true
     },
     "runtime": {
-        "arguments": "",
+        "arguments": "--v=1",
         "version": "stable"
     },
     "shortcut": {
