@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const ofVersion = document.querySelector('#of-version');
         ofVersion.innerText = await fin.System.getVersion();
         document
-        .getElementById("main")
+        .getElementById("create-child")
         .addEventListener('click', async () => {
             // console.log("Current Window:", me.name)
             // console.log("Opener", opener)
@@ -35,8 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             })
         })
 
-        fin.System.showDeveloperTools(fin.Window.getCurrentSync().me)
-        // fin.showDeveloperTools(fin.Window.getCurrentSync().me)
+        // fin.System.showDeveloperTools(fin.Window.getCurrentSync().me)
         //Only launch new windows from the main window.
         if (mainWin.identity.name === app.identity.uuid) {
             //subscribing to the run-requested events will allow us to react to secondary launches, clicking on the icon once the Application is running for example.
