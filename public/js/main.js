@@ -1,39 +1,60 @@
 // uncomment line below to register offline cache service worker 
 // navigator.serviceWorker.register('../serviceworker.js');
 document.addEventListener("DOMContentLoaded", async () => {
-    const app = await fin.Application.getCurrent();
-    const mainWin = await app.getWindow();
-    const rootFin = (function () { 
-        let win = window; 
-        while (win.opener) { 
-            win = win.opener; 
-        } 
-        return win.fin
+
+    const rootFin = (function () {
+        let win = window;
+        while (win.opener) {
+            win = win.opener;
+        }
+        let rootFin = win.fin;
+        return { rootFin, win }
     })();
 
-    // const {opener} = mainWin.getWebWindow();
     if (typeof fin !== 'undefined') {
-        init();
+        init(rootFin);
     } else {
         document.querySelector('#of-version').innerText = fin.System.getVersion();
-    }
-    
+    };
+
+
+    // let makeProvider;
     //once the DOM has loaded and the OpenFin API is ready
-    async function init() {
-        const {me: {uuid} } = app;
-        //get a reference to the current Application.
+    async function init({ rootFin, win }) {
+
+        const app = await fin.Application.getCurrent();
+        const mainWin = await app.getWindow();
+        const { me: { uuid } } = app;
         const ofVersion = document.querySelector('#of-version');
         ofVersion.innerText = await fin.System.getVersion();
-        document
-        .getElementById("create-child")
-        .addEventListener('click', async () => {
-            // console.log("Current Window:", me.name)
-            // console.log("Opener", opener)
-            rootFin.Window.create({
-                name: `child-window-${Date.now()}`,
-                url: location.href
+        const closeChildren = async () => {
+            const children = await app.getChildWindows();
+            const current = fin.Window.getCurrentSync().identity.name;
+            // const targetWindow = children.find(child => child.identity.name === current)
+            // targetWindows.forEach(w => { w.close(true)}) 
+            children.forEach((child) => {
+                if (child.identity.name !== current) {
+                    child.close(true)
+                }
             })
-        })
+            console.log("tgt:", current)
+        }
+
+        //get a reference to the current Application.
+        document
+            .getElementById("create-child")
+            .addEventListener('click', async () => {
+                // console.log("Current Window:", me.name)
+                // console.log("Opener", opener)
+                console.log(rootFin)
+                rootFin.Window.create({
+                    name: `child-window-${Date.now()}`,
+                    url: location.href
+                })
+            })
+        document
+            .getElementById("close-children")
+            .addEventListener('click', closeChildren)
 
         // fin.System.showDeveloperTools(fin.Window.getCurrentSync().me)
         //Only launch new windows from the main window.
