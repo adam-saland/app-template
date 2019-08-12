@@ -5,6 +5,7 @@
 > In the table below `rootFin` will be immediately invoked to storing a reference to each created
 > **ChildWindows** `fin` object via the `window.opener` method. Using that reference we can then create
 > each subsequent window from the **MainWindow** using this `rootFin` variable.
+> An additional demonstration showing the ability to close the __children__ of a __Child Windows__, with out effecting the _closing_ of a __Child Window__ created from the __Main Window__ is also included. 
 
 | __Main Window__ | __Child Window__ |    __Child Window Creation__  |
 |-----------------|------------------|-------------------------------|
