@@ -13,12 +13,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     })();
 
     if (typeof fin !== 'undefined') {
-        init(rootFin);
+        init();
     } else {
         document.querySelector('#of-version').innerText = fin.System.getVersion();
     };
 
-    async function init({ rootFin }) {
+    async function init() {
         const app = await fin.Application.getCurrent();
         const mainWin = await app.getWindow();
         const ofVersion = document.querySelector('#of-version');
