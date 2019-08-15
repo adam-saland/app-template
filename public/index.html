@@ -8,19 +8,24 @@
     <script src="js/main.js"></script>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* #f1 {
+            visibility: hidden;
+        } */
+    </style>
 </head>
-
 <body>
     <div>
+            <form name="f1" id="f1" action="">
+                    <label for="t1">Find</label>
+                    <input type="text" class="t1" name="t1" value="the" />
+                    <input type="submit" name="b1" value=">" />
+                </form>
         <h1>Hello, world!</h1>
         <p>This is a template for an OpenFin application.</p>
         <p id="version-number-container">
             Current version: <span id="of-version"></span>
         </p>
-        <div>LaLa, Lala, laLa , lala, lalala, tralala, some other text</div>
-        <br />
-        <input type="text" id="findField" value="lala" size="20" />
-        <button id="find-text">Find!</button>
     </div>
 </body>
 
