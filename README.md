@@ -1,5 +1,5 @@
 # Find in page 
-This repository is intended to show how text found within a page can be highlighted and triggered off based on a function as a callback to an event.
+This repository is intended to show how text found within a page can be highlighted and triggered based on a function as a callback to an event.
 ## Installation | Setup
 - `git clone -b tickets/ticket-9083 https://github.com/adam-saland/app-template.git`
 -  `cd | chdir app-template`
