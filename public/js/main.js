@@ -23,10 +23,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         const mainWin = await app.getWindow();
         const ofVersion = document.querySelector('#of-version');
         ofVersion.innerText = await fin.System.getVersion();
-
+        
         /** 
          * create window from @rootFin
          */
+        const children = []
+        fin.Application.getCurrentSync().on('window-initialized', () => {
+            children.push(fin.Window.getCurrentSync().me.name)
+        });
         document
             .getElementById("create-child")
             .addEventListener('click', async () => {
@@ -34,6 +38,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     name: `child-window-${Date.now()}`,
                     url: location.href
                 })
+            
+                console.log(children)
             })
 
         document
@@ -46,10 +52,31 @@ document.addEventListener("DOMContentLoaded", async () => {
          * @function closeChildren()
          * @description iteratively close all child windows without effecting it's parent window
          */
+        let rels=[];
+        async function winRelMap() {
+            let winMap;
+            console.log(children)
+            // const children = await app.getChildWindows();
+            children.forEach((child, i, childArr)=> {
+                if((childArr.indexOf(child) - 1 < 0)) {
+                  rels.push([childArr[0].me.name, child.me.name]);
+                }
+                else {
+                    rels.push([childArr[childArr.indexOf(child)-1].me.name, child.me.name])
+
+                }
+                winMap = new Map(rels)
+            })
+            console.log("rels", rels)
+
+            return winMap
+        }
+        
+        console.log('map', await winRelMap())
         async function closeChildren () {
-            const children = await app.getChildWindows();
+            const childWins = await app.getChildWindows();
             const current = fin.Window.getCurrentSync().identity.name;
-            children.forEach((child) => {
+            childWins.forEach((child) => {
                 if (child.identity.name !== current) {
                     child.close(true)
                 }
