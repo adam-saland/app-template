@@ -1,42 +1,12 @@
-# Hadouken Application Template
+# Window Prompt
+> The purpose of this repository is to provide an alternative method to `.confirm` for prompting a user upon a `close-requested` event within an OpenFin environment.
 
-A simple unopinionated Hadouken application template. The purpose of this repository is to allow users to get started with Hadouken immediately by providing a development setup that does not require initial configuration. The setup has minimal dependencies and the feature set is intentionally limited. Any further configuration can be achieved by editing the `app.json` file: [Application Config](https://openfin.co/application-config/).
+### Running the example
+1. git clone -b tickets/ticket-8998-5 https://github.com/adam-saland/app-template.git
+2. cd | chdir app-template && npm i | install 
+3. npm run start
 
-### What you get:
+### Support
+Please enter an issue in the repo for any questions or problems. Alternatively, please contact us at support@openfin.co 
 
-#### [Hadouken download and instal](https://github.com/hadoukenio/js-adapter)
 
-* Automates the downloading and launching of the Hadouken Runtime.
-
-#### Development server
-
-* [Live-server](https://www.npmjs.com/package/live-server) with built-in live reloading after changes to files.
-
-#### Basic HTML/Javascript Template
-
-* HTML 5 and ES6 Template with Hadouken integration.
-
-#### Service Worker
-
-* Uses the [network and cache](https://serviceworke.rs/strategy-network-or-cache.html) recipe found on the [Mozilla Service Worker Cookbok](https://serviceworke.rs/) to implement offline browsing.
-
-#### [Visual Studio code](https://code.visualstudio.com/) integration, thanks to @jcarter
-
-* Attach to debugger for in-editor break points, call stacks, and an interactive console
-* Hadouken configuration ( `app.json` ) smart completion based on available parameters
-* Hadouken API smart completions based on variable types and function definitions
-
-### How to use this:
-
-* Clone this repository: `git clone https://github.com/HadoukenIO/app-template`
-* Install the dependencies: `cd app-template` & `npm install`
-* Start the live-server and launch the application: `npm start`
-* Add your Javascript code to `main.js` and your HTML to `index.html`
-
-## License
-The code in this repository is covered by the included license.
-
-However, if you run this code, it may call on the OpenFin RVM or OpenFin Runtime, which are covered by OpenFin's Developer, Community, and Enterprise licenses. You can learn more about OpenFin licensing at the links listed below or just email us at support@openfin.co with questions.
-
-https://openfin.co/developer-agreement/
-https://openfin.co/licensing/
