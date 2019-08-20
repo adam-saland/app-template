@@ -116,7 +116,13 @@ class viewForm extends HTMLElement {
     generateDefaultConfig() {
         const {identity: { uuid } }  = fin.Application.getCurrentSync();
 
-        return {
+        return {    
+            settings: {
+                showPopoutIcon: false,
+                showMaximiseIcon: false,
+                showCloseIcon: false,
+                constrainDragToContainer: false
+            },
             content: [{
                 type: 'row',
                 content:[{

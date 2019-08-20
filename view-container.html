@@ -57,7 +57,7 @@
         float: right;
         position: relative;
         padding: 2px 0px;
-        -webkit-app-region: none;
+        -webkit-app-region: no-drag;
     }
     div.button:hover {
         cursor: pointer;
@@ -65,6 +65,13 @@
 
     div.buttonsWrapper {
         height: 28px
+    }
+    .lm_header {
+        -webkit-app-region: drag;
+    }
+
+    .lm_tabs {
+        -webkit-app-region: no-drag;
     }
 </style>
 </html>

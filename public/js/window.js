@@ -1,55 +1,50 @@
-let idCounter = 0; //hack
+async function generateLayoutConfig(view) {
+    const {url} = await view.getInfo();
 
-export default class WindowWithViews {
-
-    constructor(config, views) { 
-        const configWithDefaults = Object.assign({}, this.genDefaultConfig(), config);
-        const win = fin.Window.create(configWithDefaults);
-        
-        views.forEach((id) => {
-            const view = fin.BrowserView.wrapSync(id)
-            view.attach(win.identity);
-        })
-    }
-
-    genDefaultConfig = () => ({
-        "name": this.genId(),
-        "url": "https://www.bing.com",
-        "uuid": "OpenfinPOC",
-        "applicationIcon": "http://localhost:5555/favicon.ico",
-        "autoShow": true,
-        "saveWindowState": false,
-        "frame": true,
-        "waitForPageLoad": false
-      });
-      
-    genId = () => `OpenfinPOC${idCounter++}`
-    
+    return {    
+        settings: {
+            showPopoutIcon: false,
+            showMaximiseIcon: false,
+            showCloseIcon: false,
+            constrainDragToContainer: false
+        },
+        content: [{
+            type: 'row',
+            content:[{
+                type: 'column',
+                content:[{
+                    type: 'component',
+                    componentName: 'browserView',
+                    componentState: {
+                        identity: view.identity,
+                        url
+                    }
+                }]
+            }]
+        }]
+    };
 }
 
-const goldenLayoutsConfig = {
-    settings: {
-        hasHeaders: true,
-        constrainDragToContainer: false,
-        reorderEnabled: true,
-        selectionEnabled: false,
-        popoutWholeStack: false,
-        blockedPopoutsThrowError: false,
-        closePopoutsOnUnload: false,
-        showPopoutIcon: true,
-        showMaximiseIcon: true,
-        showCloseIcon: true
-    },
-    dimensions: {
-        borderWidth: 0,
-        minItemHeight: 10,
-        minItemWidth: 10,
-        headerHeight: 20,
-        dragProxyWidth: 300,
-        dragProxyHeight: 200
-    },
-    content: [{
-        type: 'stack',
-        content: []
-    }]
-};
+
+export default function generateWindowWithView(viewId) {
+    return new Promise(async (res, rej) => {
+        const client = await fin.InterApplicationBus.Channel.connect('custom-frame');
+        const view = await fin.BrowserView.wrapSync(viewId);
+        const layoutConfig = await generateLayoutConfig(view);
+        try {
+            const createViewPayload = {
+                options: {
+                    defaultWidth: 700,
+                    defaultHeight: 900,
+                    name: `child-window-${Date.now()}`
+                },
+                layoutConfig
+            };
+
+            await client.dispatch('create-view', createViewPayload);
+            res(window);
+        } catch (e) {
+            rej(e);
+        }
+    })
+}

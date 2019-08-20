@@ -13,7 +13,7 @@ export default class openfinFrame extends HTMLElement {
         const win = fin.Window.getCurrentSync();
         const closeClick = e => win.close();
         const minimizeClick = e => win.minimize();
-        const maximizeClick = e => win.maximize();
+        const maximizeClick = async e => win.getState().then(state => state === 'maximized'? win.restore() : win.maximize())
 
         this.closeButton = html`<div class="button" @click=${closeClick}}>${closeIcon}</div>`;
         this.minimizeButton = html`<div class="button" @click=${minimizeClick}>${minimizeIcon}</div>`;

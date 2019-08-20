@@ -1,6 +1,6 @@
 import { html, render } from '../node_modules/lit-html/lit-html.js';
-import { popoutIcon } from './constants.js';
-import WindowWithViews from '../public/js/window.js';
+import { popoutIcon} from './constants.js';
+import generateWindowWithView from '../public/js/window.js';
 //register service worker
 //navigator.serviceWorker.register('../serviceworker.js');
 
@@ -67,7 +67,6 @@ class goldenLayouts extends HTMLElement {
                     const rView = new ResizableView(bv.componentState);
                     rView.renderIntoComponent(bv);
                 }
-
             });
 
             return;
@@ -84,17 +83,16 @@ class goldenLayouts extends HTMLElement {
         this.layout.on('stackCreated', this.onStackCreated.bind(this));
         this.layout.on('tabCreated', this.onTabCreated.bind(this));
         this.layout.on('itemDestroyed', this.onItemDestroyed.bind(this));
+        this.layout.on('initialised', this.initializeViews.bind(this));
         win.on('minimized', () => {
             win.once('restored', () => {
                 // this.layout.updateSize(); todo: fix.
-            })
-        })
+            });
+        });
     }
 
     onStackCreated(a, b, c) {
         console.log('onStackcreated', a, b, c);
-
-        //new WindowWithViews(a.config.content[0], a.element[0]);
     }
     onTabCreated(tab) {
         this.isDragging = false;
@@ -107,10 +105,10 @@ class goldenLayouts extends HTMLElement {
 
     injectPopoutButton(tab) {
         const onPopooutButtonClick = async () => {
-            const view = tab.contentItem.container.getState().identity;
-            const defaultConfig = await this.getDefaultConfig();
-            new WindowWithViews(defaultConfig, [view]);
-            tab.contentItem.container.close(view);
+            const viewId = tab.contentItem.container.getState().identity;
+
+            generateWindowWithView(viewId)
+                .then(() => tab.contentItem.remove())
         };
         const popoutButton = html`<div @click=${onPopooutButtonClick}>${popoutIcon}</div>`;
         const closeButton = tab.element[0].getElementsByClassName("lm_close_tab")[0];
@@ -163,10 +161,8 @@ class goldenLayouts extends HTMLElement {
     async render() {
         //Restore the layout.
         await this.restore();
-
         this.setupListeners();
-        this.layout.on('initialised', this.initializeViews.bind(this))
-        this.layout.init();
+        this.initLayoutWhenDOMReady()
 
         const win = fin.Window.getCurrentSync();
 
@@ -185,10 +181,25 @@ class goldenLayouts extends HTMLElement {
         // render(info, this);
     }
 
-    initializeViews() {
+    async initializeViews() {
         this.attachViews();
-        this.updateViewTitles();
+        setInterval(this.updateViewTitles.bind(this), 500);
     }
+
+    initLayoutWhenDOMReady() {
+        if(document.readyState === 'complete') {
+            this.layout.init();
+        } else {
+            const handler = event => {
+                if (event.target.readyState === 'complete') {
+                    this.layout.init();
+                    window.removeEventListener(handler);
+                }
+            }
+            window.addEventListener('readystatechange', handler);
+        }
+    }
+
 
     async updateViewTitles() {
         const allViewWrappers = this.layout.root.getComponentsByName('browserView');
@@ -323,7 +334,7 @@ class ResizableView {
 
     async renderIntoComponent(opts) {
         try {
-            this.view = await fin.BrowserView.create(this.options);
+            this.view = await this.createOrAttachView();
             const { container, componentState } = opts;
             // const element = $(`<div class="bv-container" id="${this.componentKey}"></div>`);
             // // container.getElement().html( `<h2> ${componentState.label} - ${ this.componentKey }</h2>`);
@@ -334,6 +345,21 @@ class ResizableView {
         } catch (err) {
             console.error(err);
         }
+        return;
+    }
+
+    async createOrAttachView() {
+        let view;
+        try {
+            view = await fin.BrowserView.create(this.options);
+            view.getInfo && view.getInfo(); // the hackiest hack. remove once we have BV events.
+        } catch (e) {
+            const {identity} = fin.Window.getCurrentSync();
+            view = fin.BrowserView.wrapSync({uuid: this.options.uuid, name: this.options.name})    
+            
+            await view.attach(identity);
+        }
+        return view;
     }
 }
 

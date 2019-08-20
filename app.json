@@ -86,7 +86,7 @@
         }
     },
     "runtime": {
-        "arguments": "--v-1 --inspect",
+        "arguments": "--v=1 --inspect",
         "version": "13.76.44.5"
     },
     "shortcut": {
