@@ -13,60 +13,43 @@ async function init() {
     const app = await fin.Application.getCurrent();
     const win = await fin.Window.getCurrent();
 
-
-
     const ofVersion = document.querySelector('#of-version');
     ofVersion.innerText = await fin.System.getVersion();
 
+    function closePrompt() {
+        let closePromptEl = document.createElement('div');
+        let closePromptMsg = document.createElement('p');
+        let btnWrapper = document.createElement('div');
+        let okBtn = document.createElement('button');
+        let cancelBtn = document.createElement('button');
 
-    win.on('close-requested', async () => {
-        let btnHtmlStr = `
-            <div id="yesNo">
-            <h1> Are you sure you want to exit? </h1>
-            <span>
-                <button id="yes">Yes</button>
-            </span>
-            <span>
-                <button id="no">No</button>
-            </span>
-            </div>`
-        document.body.innerHTML += btnHtmlStr
-        document
-            .getElementById("yesNo")
-            .addEventListener('click', (e) => {
-                if (e.target.id === "yes") win.close(true);
-            })
+        closePromptEl.setAttribute('id', 'close-prompt');
+        btnWrapper.setAttribute('id', 'button-wrapper');
+        okBtn.setAttribute('id', 'ok');
+        cancelBtn.setAttribute('id', 'cancel');
 
-    })
+        closePromptMsg.innerText = 'Are you sure you want to exit?';
+        okBtn.innerText = 'OK';
+        cancelBtn.innerText = 'Cancel';
 
+        btnWrapper.append(okBtn);
+        btnWrapper.append(cancelBtn);
+        closePromptEl.append(closePromptMsg);
+        closePromptEl.append(btnWrapper);
 
+        document.querySelector('body').append(closePromptEl);
 
-    //Only launch new windows from the main window.
-    if (win.identity.name === app.identity.uuid) {
-        //subscribing to the run-requested events will allow us to react to secondary launches, clicking on the icon once the Application is running for example.
-        //for this app we will  launch a child window the first the user clicks on the desktop.
-        app.once('run-requested', async () => {
-            await fin.Window.create({
-                name: 'childWindow',
-                url: location.href,
-                defaultWidth: 320,
-                defaultHeight: 320,
-                autoShow: true
-            });
-        });
+        return closePromptEl;
     }
-}
 
+    win.addListener('close-requested', () => {
+        let closePromptEl = closePrompt();
 
-
-
-async function launchWindow() {
-    const popup = await fin.Window.create({
-        uuid: fin.Window.me.uuid,
-        name: `pop-up`,
-        url: `${location.origin}/popup.html`,
-        autoShow: true,
-        defaultCentered: true
+        closePromptEl.addEventListener('click', event => {
+            if (event.target.id === 'ok') win.close(true);
+            if (event.target.id === 'cancel') document.querySelector('body').removeChild(closePromptEl);
+        })
     })
-    return popup
 }
+
+

@@ -1,0 +1,99 @@
+@font-face {
+  font-family: 'Akkurat Pro';
+  src: url('/assets/lineto-akkurat-pro-regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+}
+
+body {
+  font-family: 'Akkurat Pro';
+  padding: 10px;
+}
+
+h1 {
+  font-size: 48px;
+  line-height: 48px;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 400;
+}
+
+.subhead {
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+a {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.logo-container {
+  text-align: center;
+}
+
+.logo-container img {
+  height: 40px;
+}
+
+#close-prompt {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: calc(50% - 250px);
+  width: 418px;
+  height: 93px;
+  padding: 20px 15px;
+  background: #fff;
+  border: 1px #eee solid;
+  border-radius: 2px;
+  box-shadow: 0.5px 0.5px 3.5px 1px rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+}
+
+#close-prompt p {
+  margin: 0;
+}
+
+#button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+#close-prompt button {
+  border: none;
+  text-decoration: none;
+  min-width: 68px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+#cancel {
+  background: #fff;
+  color: #4C8BF5;
+  border: 1px #eee solid !important;
+  margin-left: 5px;
+}
+
+#ok {
+  background: #4C8BF5;
+  color: #fff;
+}
+
+
