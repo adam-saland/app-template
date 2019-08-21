@@ -1,4 +1,5 @@
 import { html, render } from '../node_modules/lit-html/lit-html.js';
+import { createWindow } from './frame-api.js';
 
 class viewForm extends HTMLElement {
     constructor() {
@@ -93,16 +94,8 @@ class viewForm extends HTMLElement {
     }
 
     async createView() {
-        const createViewPayload = {
-            options: {
-                defaultWidth: 700,
-                defaultHeight: 900,
-                name: `child-window-${Date.now()}`
-            },
-            layoutConfig: this.generateDefaultConfig()
-        };
         try {
-             await this.client.dispatch('create-view', createViewPayload);
+            createWindow(this.generateDefaultConfig());
         } catch (err) {
             console.error(err);
         }
@@ -116,7 +109,7 @@ class viewForm extends HTMLElement {
     generateDefaultConfig() {
         const {identity: { uuid } }  = fin.Application.getCurrentSync();
 
-        return {    
+        return {
             settings: {
                 showPopoutIcon: false,
                 showMaximiseIcon: false,

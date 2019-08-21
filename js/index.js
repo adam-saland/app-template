@@ -1,3 +1,4 @@
+import { createProvider } from './frame-api.js';
 (async () => {
 
     const app = fin.Application.getCurrentSync();
@@ -28,36 +29,6 @@
 
 
     //Create channel
-    const provider = await fin.InterApplicationBus.Channel.create('custom-frame');
-    const clients = new Map();
-
-    provider.register('create-view', async({ options, layoutConfig}, identity) => {
-        const winOption = Object.assign({
-            url: 'http://localhost:5555/view-container.html',
-            frame: false,
-            autoShow: true,
-            customData: layoutConfig
-        }, options);
-
-        return fin.Window.create(winOption);
-    });
-
-    provider.onConnection(async (identity, payload) => {
-        const channelName = `${identity.uuid}-${identity.name}-custom-frame`;
-        console.log(payload);
-        if (payload && payload.frameView) {
-
-            clients.set(identity.name, identity);
-            console.log('initiated two way coms with a window');
-        }
-    });
-
-    provider.register('add-view', async({ viewOptions, target }, identity) => {
-        console.log(clients);
-        console.log(target);
-        console.log(viewOptions);
-        const client = clients.get(target.name);
-        return provider.dispatch(client, 'add-view', { viewOptions });
-    });
+    await createProvider();
 
 })();
