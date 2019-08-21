@@ -159,6 +159,7 @@ class goldenLayouts extends HTMLElement {
     }
 
     async render() {
+        debugger;
         //Restore the layout.
         await this.restore();
         this.setupListeners();
@@ -187,17 +188,18 @@ class goldenLayouts extends HTMLElement {
     }
 
     initLayoutWhenDOMReady() {
-        if(document.readyState === 'complete') {
-            this.layout.init();
-        } else {
-            const handler = event => {
-                if (event.target.readyState === 'complete') {
-                    this.layout.init();
-                    window.removeEventListener(handler);
-                }
-            }
-            window.addEventListener('readystatechange', handler);
-        }
+        this.layout.init();
+        // if(document.readyState === 'complete') {
+        //     this.layout.init();
+        // } else {
+        //     const handler = event => {
+        //         if (event.target.readyState === 'complete') {
+        //             this.layout.init();
+        //             window.removeEventListener(handler);
+        //         }
+        //     }
+        //     window.addEventListener('readystatechange', handler);
+        // }
     }
 
 
@@ -354,9 +356,10 @@ class ResizableView {
             view = await fin.BrowserView.create(this.options);
             view.getInfo && view.getInfo(); // the hackiest hack. remove once we have BV events.
         } catch (e) {
+            console.log('in the catch');
             const {identity} = fin.Window.getCurrentSync();
-            view = fin.BrowserView.wrapSync({uuid: this.options.uuid, name: this.options.name})    
-            
+            view = fin.BrowserView.wrapSync({uuid: this.options.uuid, name: this.options.name});
+
             await view.attach(identity);
         }
         return view;

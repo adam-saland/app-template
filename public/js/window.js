@@ -1,7 +1,7 @@
 async function generateLayoutConfig(view) {
     const {url} = await view.getInfo();
 
-    return {    
+    return {
         settings: {
             showPopoutIcon: false,
             showMaximiseIcon: false,
@@ -36,6 +36,7 @@ export default function generateWindowWithView(viewId) {
                 options: {
                     defaultWidth: 700,
                     defaultHeight: 900,
+                    showDevTools: true,
                     name: `child-window-${Date.now()}`
                 },
                 layoutConfig
@@ -46,5 +47,5 @@ export default function generateWindowWithView(viewId) {
         } catch (e) {
             rej(e);
         }
-    })
+    });
 }
