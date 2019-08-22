@@ -1,8 +1,8 @@
 {
     "startup_app": {
-        "name": "OpenfinPOC",
+        "name": "sub-window-prototype",
         "url": "https://openfin.github.io/golden-prototype/index.html",
-        "uuid": "OpenfinPOC",
+        "uuid": "sub-window-prototype",
         "applicationIcon": "https://openfin.github.io/golden-prototype/favicon.ico",
         "autoShow": false,
         "saveWindowState": true,
