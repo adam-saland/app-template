@@ -17,7 +17,7 @@ navigator.serviceWorker.register('../serviceworker.js');
         name:'child',
         defaultWidth: 700,
         defaultHeight: 900,
-        url: 'http://localhost:5555/view-container.html',
+        url: location.href.replace("index", "view-container"),
         frame: false,
         autoShow: true,
         customData,
