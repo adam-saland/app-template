@@ -7,7 +7,7 @@ export async function createProvider() {
 
     provider.register('create-view', async({ options, layoutConfig}, identity) => {
         const winOption = Object.assign({
-            url: 'http://localhost:5555/view-container.html',
+            url: location.href.replace("index", "view-container"),
             frame: false,
             autoShow: true,
             customData: layoutConfig
