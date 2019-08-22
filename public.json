@@ -1,9 +1,9 @@
 {
     "startup_app": {
         "name": "OpenfinPOC",
-        "url": "http://localhost:5555/index.html",
+        "url": "https://openfin.github.io/golden-prototype/index.html",
         "uuid": "OpenfinPOC",
-        "applicationIcon": "http://localhost:5555/favicon.ico",
+        "applicationIcon": "https://openfin.github.io/golden-prototype/favicon.ico",
         "autoShow": false,
         "saveWindowState": true,
         "waitForPageLoad": false,
@@ -37,7 +37,7 @@
                                             "uuid": "OpenfinPOC"
                                         },
                                         "showDevTools": true,
-                                        "url": "http://localhost:5555/view-form.html"
+                                        "url": "https://openfin.github.io/golden-prototype/view-form.html"
                                     }
                                 },
                                 {
@@ -92,7 +92,7 @@
     "shortcut": {
         "company": "OpenFin",
         "description": "Openfin POC",
-        "icon": "http://localhost:5555/favicon.ico",
+        "icon": "https://openfin.github.io/golden-prototype//favicon.ico",
         "name": "Openfin POC"
     },
     "services": [
