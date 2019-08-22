@@ -1,5 +1,5 @@
 import { html, render } from '../node_modules/lit-html/lit-html.js';
-import { getClient, createWindow } from './frame-api.js';
+import { getClient, createWindow, moveView } from './frame-api.js';
 //register service worker
 //navigator.serviceWorker.register('../serviceworker.js');
 
@@ -99,6 +99,13 @@ class goldenLayouts extends HTMLElement {
             await fin.BrowserView.wrapSync(viewConfig.identity).hide();
             bv.container.tab.contentItem.remove();
         });
+
+        await fin.InterApplicationBus.subscribe({ uuid: '*' }, 'should-tab-to', async (identity) => {
+            const views = this.layout.root.getComponentsByName('browserView').map(bv => bv.componentState);
+            for (let v of views) {
+                await moveView(v, fin.Window.getCurrentSync().identity, identity);
+            }
+        })
     }
 
     getBrowserViewComponent(identity) {
@@ -150,6 +157,7 @@ class goldenLayouts extends HTMLElement {
     }
 
     onItemDestroyed(e) {
+        //Need to wait a bit for the view to move (on a drag and drop)
         setTimeout(() => {
             if(e.componentName === 'browserView') {
                 const viewCount = this.layout.root.getComponentsByName('browserView').length;
@@ -158,7 +166,7 @@ class goldenLayouts extends HTMLElement {
                     currWin.close().catch(console.error);
                 }
             }
-        }, 0);
+        }, 100);
     }
 
     onTabDrag(dragListener, tabIdentity) {
@@ -279,7 +287,7 @@ class goldenLayouts extends HTMLElement {
             content: [{
                 type: 'row',
                 content:[{
-                    type: 'column',
+                    type: 'stack',
                     content:[{
                         type: 'component',
                         componentName: 'browserView',
@@ -368,6 +376,8 @@ class ResizableView {
             view = fin.BrowserView.wrapSync({uuid: this.options.uuid, name: this.options.name});
 
             await view.attach(identity);
+            await view.hide();
+            await view.show();
         }
         return view;
     }

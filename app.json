@@ -87,7 +87,7 @@
     },
     "runtime": {
         "arguments": "--v=1 --inspect",
-        "version": "13.76.44.5"
+        "version": "canary"
     },
     "shortcut": {
         "company": "OpenFin",
@@ -98,14 +98,10 @@
     "services": [
         {
             "name": "layouts",
-            "manifestUrl": "https://cdn.openfin.co/services/openfin/layouts/app.json",
-            "config": {
-
-                "features": {
-
-                    "tab": false
-
-                }
+            "manifestUrl": "https://cdn.openfin.co/demos/cs-layouts/app-test.json",
+            "tabstrip": {
+                "url": "https://notarealtabstrip.com/tabstrip.html",
+                "height": 20
             }
         }
     ]

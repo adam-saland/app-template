@@ -161,7 +161,7 @@ class viewForm extends HTMLElement {
             content: [{
                 type: 'row',
                 content:[{
-                    type: 'column',
+                    type: 'stack',
                     content:[{
                         type: 'component',
                         componentName: 'browserView',
@@ -174,7 +174,7 @@ class viewForm extends HTMLElement {
                         }
                     }]
                 },{
-                    type: 'column',
+                    type: 'stack',
                     content:[{
                         type: 'component',
                         componentName: 'browserView',

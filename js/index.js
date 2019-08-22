@@ -20,8 +20,8 @@ import { createProvider } from './frame-api.js';
         frame: false,
         autoShow: true,
         customData,
-        "resizeRegion": {
-            "size": 7
+        resizeRegion: {
+            bottomRightCorner: 20
         }
     };
 
