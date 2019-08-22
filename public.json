@@ -1,0 +1,108 @@
+{
+    "startup_app": {
+        "name": "OpenfinPOC",
+        "url": "http://localhost:5555/index.html",
+        "uuid": "OpenfinPOC",
+        "applicationIcon": "http://localhost:5555/favicon.ico",
+        "autoShow": false,
+        "saveWindowState": true,
+        "waitForPageLoad": false,
+        "defaultWidth": 700,
+        "defaultHeight": 900,
+        "resizeRegion": {
+            "bottomRightCorner": 15,
+            "size": 15
+        },
+        "customData": {
+            "settings": {
+                "popoutWholeStack": false,
+                "constrainDragToContainer": true,
+                "showPopoutIcon": false,
+                "showMaximiseIcon": false,
+                "showCloseIcon": false
+            },
+            "content": [
+                {
+                    "type": "row",
+                    "content": [
+                        {
+                            "type": "column",
+                            "content": [
+                                {
+                                    "type": "component",
+                                    "componentName": "browserView",
+                                    "componentState": {
+                                        "identity": {
+                                            "name": "component_B",
+                                            "uuid": "OpenfinPOC"
+                                        },
+                                        "showDevTools": true,
+                                        "url": "http://localhost:5555/view-form.html"
+                                    }
+                                },
+                                {
+                                    "type": "component",
+                                    "componentName": "browserView",
+                                    "componentState": {
+                                        "identity": {
+                                            "name": "component_C",
+                                            "uuid": "OpenfinPOC"
+                                        },
+                                        "url": "https://apple.com"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "column",
+                            "content": [
+                                {
+                                    "type": "component",
+                                    "componentName": "browserView",
+                                    "componentState": {
+                                        "identity": {
+                                            "name": "component_D",
+                                            "uuid": "OpenfinPOC"
+                                        },
+                                        "url": "https://wikipedia.org"
+                                    }
+                                },
+                                {
+                                    "type": "component",
+                                    "componentName": "browserView",
+                                    "componentState": {
+                                        "identity": {
+                                            "name": "component_E",
+                                            "uuid": "OpenfinPOC"
+                                        },
+                                        "url": "https://cdn.openfin.co/docs/javascript/13.76.44.7/"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "runtime": {
+        "arguments": "--v=1 --inspect",
+        "version": "canary"
+    },
+    "shortcut": {
+        "company": "OpenFin",
+        "description": "Openfin POC",
+        "icon": "http://localhost:5555/favicon.ico",
+        "name": "Openfin POC"
+    },
+    "services": [
+        {
+            "name": "layouts",
+            "manifestUrl": "https://cdn.openfin.co/demos/cs-layouts/app-test.json",
+            "tabstrip": {
+                "url": "https://notarealtabstrip.com/tabstrip.html",
+                "height": 20
+            }
+        }
+    ]
+}
