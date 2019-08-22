@@ -9,10 +9,6 @@ class viewForm extends HTMLElement {
         this.generateDefaultConfig = this.generateDefaultConfig.bind(this);
         this.addToView = this.addToView.bind(this);
         this.handleInput = this.handleInput.bind(this);
-        this.selectSource = this.selectSource.bind(this);
-        this.selectDestination = this.selectDestination.bind(this);
-        this.selectView = this.selectView.bind(this);
-        this.moveView = this.moveView.bind(this);
         this.window = fin.Window.getCurrentSync();
         this.viewList = [];
 
