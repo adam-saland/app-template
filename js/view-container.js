@@ -1,4 +1,4 @@
-import { html, render } from '../node_modules/lit-html/lit-html.js';
+import { html, render } from 'https://unpkg.com/lit-html@1.0.0/lit-html.js';
 import { getClient, createWindow, moveView } from './frame-api.js';
 //register service worker
 navigator.serviceWorker.register('../serviceworker.js');

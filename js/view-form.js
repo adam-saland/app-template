@@ -1,4 +1,4 @@
-import { html, render } from '../node_modules/lit-html/lit-html.js';
+import { html, render } from 'https://unpkg.com/lit-html@1.0.0/lit-html.js';
 import { createWindow, addViewToWindow, getViews, removeView, moveView } from './frame-api.js';
 
 class viewForm extends HTMLElement {
