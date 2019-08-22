@@ -17,7 +17,17 @@ self.addEventListener('fetch', evt => {
 
 function precache() {
     return caches.open(CACHE).then(cache => {
-        return cache.addAll(['./index.html', './favicon.ico', 'js/main.js']);
+        return cache.addAll([
+            './index.html',
+            './view-container.html',
+            './view-form.html',
+            './favicon.ico',
+            'js/frame-api.js',
+            'js/index.js',
+            'js/view-container.js',
+            'js/view-form.js',
+            './node_modules/lit-html/lit-html.js'
+        ]);
     });
 }
 

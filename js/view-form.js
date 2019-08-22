@@ -74,52 +74,8 @@ class viewForm extends HTMLElement {
                     ${wins.map((win) => html`<option value="${win.identity.name}">${win.identity.name}</option>`)}
                 </select>
              </fieldset>
-             <fieldset>
-                 <legend>Move a view</legend>
-                 <button @click=${this.moveView}>Add</button> <br>
-                 <label>From</label>
-                 <select @change="${this.selectSource}">
-                     ${wins.map((win) => html`<option value="${win.identity.name}">${win.identity.name}</option>`)}
-                 </select>
-                 <br>
-                 <label>To</label>
-                 <select @change="${this.selectDestination}">
-                     ${wins.map((win) => html`<option value="${win.identity.name}">${win.identity.name}</option>`)}
-                 </select>
-                 <br>
-                 <label>View</label>
-                 <select @change="${this.selectView}">
-                     ${this.viewList.map((view) => html`<option value="${JSON.stringify(view)}">${view.url}</option>`)}
-                 </select>
-             </fieldset>
         </div>`;
         render(vForm, this);
-    }
-
-    async moveView() {
-        console.log(this.selectedView);
-        console.log('here we go', { uuid: this.window.identity.uuid, name: this.destinationWindow });
-        const sourceWindowIdentity = { uuid: this.window.identity.uuid, name: this.sourceWindow };
-        const destinationWindowIdentity = { uuid: this.window.identity.uuid, name: this.destinationWindow };
-        await moveView(this.selectedView, sourceWindowIdentity, destinationWindowIdentity);
-    }
-
-    async selectSource(e) {
-        this.sourceWindow = e.target.value;
-        this.viewList = await getViews({ uuid: this.window.identity.uuid, name: this.sourceWindow });
-        this.render();
-    }
-
-    selectDestination(e) {
-        this.destinationWindow = e.target.value;
-
-    }
-
-    selectView(e) {
-        console.log(e.target.value);
-        //TODO get rid of this hack.... please.
-        this.selectedView = JSON.parse(e.target.value);
-        console.log(this.selectedView);
     }
 
     async addToView() {

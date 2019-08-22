@@ -1,4 +1,5 @@
 import { createProvider } from './frame-api.js';
+navigator.serviceWorker.register('../serviceworker.js');
 (async () => {
 
     const app = fin.Application.getCurrentSync();
