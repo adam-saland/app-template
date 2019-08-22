@@ -54,6 +54,7 @@ class goldenLayouts extends HTMLElement {
         this.getDefaultConfig = this.getDefaultConfig.bind(this);
         this.createChannelConnections = this.createChannelConnections.bind(this);
         this.generateLayoutConfig = this.generateLayoutConfig.bind(this);
+        this.getBrowserViewComponent = this.getBrowserViewComponent.bind(this);
         this.layout = null;
         this.isDragging = false;
 
@@ -70,26 +71,38 @@ class goldenLayouts extends HTMLElement {
         this.client = await getClient();
 
         //TODO: reusing the same name is al sorts of wrong for this thing...do something else.
-        this.client.register('add-view', async ({ viewOptions }) => {
+        this.client.register('add-view', async (viewConfig) => {
 
             const content = {
                 type: 'component',
                 componentName: 'browserView',
-                componentState: viewOptions
+                componentState: viewConfig
             };
 
             console.log('adding stuf');
             console.log(this.layout.root.contentItems[ 0 ].addChild(content));
 
-            this.layout.root.getComponentsByName('browserView').forEach(bv => {
-                if (bv.componentState.identity.name === viewOptions.identity.name) {
-                    const rView = new ResizableView(bv.componentState);
-                    rView.renderIntoComponent(bv);
-                }
-            });
+            var bv = this.getBrowserViewComponent(viewConfig.identity);
+            const rView = new ResizableView(bv.componentState);
+            rView.renderIntoComponent(bv);
 
-            return;
+            return content;
         });
+
+        this.client.register('get-views', async () => {
+            return this.layout.root.getComponentsByName('browserView').map(bv => bv.componentState);
+        });
+
+        this.client.register('remove-view', async(viewConfig) => {
+            console.log(viewConfig);
+            var bv = this.getBrowserViewComponent(viewConfig.identity);
+            await fin.BrowserView.wrapSync(viewConfig.identity).hide();
+            bv.container.tab.contentItem.remove();
+        });
+    }
+
+    getBrowserViewComponent(identity) {
+        return this.layout.root.getComponentsByName('browserView').find(bv => bv.componentState.identity.name === identity.name);
     }
 
     getStorageKey() {
@@ -281,9 +294,7 @@ class goldenLayouts extends HTMLElement {
 class ResizableView {
     constructor(options) {
         const currWin =  fin.Window.getCurrentSync();
-        console.log(currWin);
         const identity = { uuid: currWin.identity.uuid, name: options.identity.name };
-        console.log(identity);
         this.options = {
             autoResize: {
                 width: false,
@@ -301,7 +312,6 @@ class ResizableView {
             },
             showDevTools: options.showDevTools
         };
-        console.log(this.options);
         this.componentKey = `bv-container${ identity.uuid }-${ identity.name }`;
         const resizeObserver = new ResizeObserver( entries => {
             if (this.view) {

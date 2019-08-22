@@ -16,14 +16,13 @@ export async function createProvider() {
         return fin.Window.create(winOption);
     });
 
-    provider.register('add-view', async({ viewOptions, target }, identity) => {
+    //If the provider has not defined an action, we forward it to a given target.
+    await provider.setDefaultAction(async (action, { target, opts }, identity) => {
         const client = provider.connections.find(c => c.name === target.name);
         if (client) {
-            return provider.dispatch(client, 'add-view', { viewOptions });
+            return await provider.dispatch(client, action, opts);
         }
-
-        return new Error(`Client with name ${target.name} not found`);
-
+        throw new Error(`Client with name ${target.name} not found`);
     });
 
     return provider;
@@ -51,4 +50,48 @@ export async function createWindow(layoutConfig) {
         layoutConfig
     };
     return await c.dispatch('create-view', createWindowOptions);
+}
+
+export async function addViewToWindow(viewConfig, target) {
+    const client = await getClient();
+
+    return client.dispatch('add-view', {
+        target,
+        opts: viewConfig
+    });
+}
+
+//TODO: this name is suspect.
+export async function getViews(target) {
+    const client = await getClient();
+
+    return client.dispatch('get-views', {
+        target,
+        opts: {}
+    });
+}
+
+export async function removeView(viewConfig, target) {
+    const client = await getClient();
+
+    return client.dispatch('remove-view', {
+        target,
+        opts: viewConfig
+    });
+}
+
+export async function removeAndCloseView(viewConfig, target) {
+    const client = await getClient();
+
+    return client.dispatch('remove-close-view', {
+        target,
+        opts: viewConfig
+    });
+}
+
+export async function moveView(viewConfig, sourceWindow, destinationWindow) {
+    const client = await getClient();
+
+    await removeView(viewConfig, sourceWindow);
+    await addViewToWindow(viewConfig, destinationWindow);
 }

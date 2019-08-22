@@ -1,5 +1,5 @@
 import { html, render } from '../node_modules/lit-html/lit-html.js';
-import { createWindow } from './frame-api.js';
+import { createWindow, addViewToWindow, getViews, removeView, moveView } from './frame-api.js';
 
 class viewForm extends HTMLElement {
     constructor() {
@@ -9,17 +9,17 @@ class viewForm extends HTMLElement {
         this.generateDefaultConfig = this.generateDefaultConfig.bind(this);
         this.addToView = this.addToView.bind(this);
         this.handleInput = this.handleInput.bind(this);
+        this.selectSource = this.selectSource.bind(this);
+        this.selectDestination = this.selectDestination.bind(this);
+        this.selectView = this.selectView.bind(this);
+        this.moveView = this.moveView.bind(this);
         this.window = fin.Window.getCurrentSync();
-        this.channelConnect = this.channelConnect.bind(this);
+        this.viewList = [];
 
         //this could be done better.
-        fin.Application.getCurrentSync().on('window-created', this.render);
-        this.channelConnect();
+        fin.Application.getCurrentSync().on('window-initialized', this.render);
+        fin.Application.getCurrentSync().on('window-closed', this.render);
         this.render();
-    }
-
-    async channelConnect() {
-        this.client = await fin.InterApplicationBus.Channel.connect('custom-frame');
     }
 
     async render() {
@@ -31,6 +31,7 @@ class viewForm extends HTMLElement {
         //Hard coded code here, caution:
         const app = fin.Application.getCurrentSync();
         const wins = await app.getChildWindows();
+
         this.selectedWindow = wins[0].identity.name;
         const vForm = html`
         <div>
@@ -69,27 +70,68 @@ class viewForm extends HTMLElement {
                     .value="${this.urlToAdd}"
                      @input=${this.handleInput}"
                 /> <br>
-                <select id="pet-select" @change=${(e) => this.selectedWindow = e.srcElement.value}>
+                <select @change=${(e) => this.selectedWindow = e.srcElement.value}>
                     ${wins.map((win) => html`<option value="${win.identity.name}">${win.identity.name}</option>`)}
                 </select>
+             </fieldset>
+             <fieldset>
+                 <legend>Move a view</legend>
+                 <button @click=${this.moveView}>Add</button> <br>
+                 <label>From</label>
+                 <select @change="${this.selectSource}">
+                     ${wins.map((win) => html`<option value="${win.identity.name}">${win.identity.name}</option>`)}
+                 </select>
+                 <br>
+                 <label>To</label>
+                 <select @change="${this.selectDestination}">
+                     ${wins.map((win) => html`<option value="${win.identity.name}">${win.identity.name}</option>`)}
+                 </select>
+                 <br>
+                 <label>View</label>
+                 <select @change="${this.selectView}">
+                     ${this.viewList.map((view) => html`<option value="${JSON.stringify(view)}">${view.url}</option>`)}
+                 </select>
              </fieldset>
         </div>`;
         render(vForm, this);
     }
 
+    async moveView() {
+        console.log(this.selectedView);
+        console.log('here we go', { uuid: this.window.identity.uuid, name: this.destinationWindow });
+        const sourceWindowIdentity = { uuid: this.window.identity.uuid, name: this.sourceWindow };
+        const destinationWindowIdentity = { uuid: this.window.identity.uuid, name: this.destinationWindow };
+        await moveView(this.selectedView, sourceWindowIdentity, destinationWindowIdentity);
+    }
+
+    async selectSource(e) {
+        this.sourceWindow = e.target.value;
+        this.viewList = await getViews({ uuid: this.window.identity.uuid, name: this.sourceWindow });
+        this.render();
+    }
+
+    selectDestination(e) {
+        this.destinationWindow = e.target.value;
+
+    }
+
+    selectView(e) {
+        console.log(e.target.value);
+        //TODO get rid of this hack.... please.
+        this.selectedView = JSON.parse(e.target.value);
+        console.log(this.selectedView);
+    }
+
     async addToView() {
         const {identity: { uuid } }  = fin.Application.getCurrentSync();
         const target = { uuid, name: this.selectedWindow };
-        await this.client.dispatch('add-view', {
-            target,
-            viewOptions: {
+        addViewToWindow({
             identity: {
                 uuid,
                 name: `component_${Date.now() +  Math.floor(Math.random() * 10000)}`
             },
             url: this.urlToAdd
-        }});
-
+        }, target);
         console.log(this.selectedWindow, this.urlToAdd);
     }
 
