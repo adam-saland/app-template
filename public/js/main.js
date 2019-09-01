@@ -17,6 +17,28 @@ async function init() {
     const ofVersion = document.querySelector('#of-version');
     ofVersion.innerText = await fin.System.getVersion();
 
+    win.on('close-requested', async (e) => {
+        let safeDialog = document.createElement('dialog');
+        if (typeof safeDialog.showModal === "function") {
+            document.body.appendChild(safeDialog)
+            safeDialog.innerHTML+=
+            `<form method="dialog">
+                <p> Are you sure you want to quit? </p>
+                <menu>
+                    <button value="cancel">Cancel</button>
+                    <button id="confirmBtn" value="default">Confirm</button>
+                </menu>
+            </form>`
+            safeDialog.showModal();
+          } else {
+            alert("The dialog API is not supported by this browser");
+          }
+          safeDialog.addEventListener('close', function onClose() {
+            if(safeDialog.returnValue === "default") {
+                win.close(true);
+            }
+        });
+    }); 
     //Only launch new windows from the main window.
     if (win.identity.name === app.identity.uuid) {
         //subscribing to the run-requested events will allow us to react to secondary launches, clicking on the icon once the Application is running for example.
