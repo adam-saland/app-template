@@ -6,5 +6,8 @@
     "hadouken-js-adapter": "latest",
     "live-server": "latest"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@gkt/microphone": "^1.0.3"
+  }
 }

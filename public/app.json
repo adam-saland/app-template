@@ -1,8 +1,8 @@
 {
     "startup_app": {
-        "name": "OpenfinPOC",
+        "name": "Audio",
         "url": "http://localhost:5555/index.html",
-        "uuid": "OpenfinPOC",
+        "uuid": "Audio",
         "applicationIcon": "http://localhost:5555/favicon.ico",
         "autoShow": true,
         "saveWindowState": true
@@ -13,8 +13,8 @@
     },
     "shortcut": {
         "company": "OpenFin",
-        "description": "Openfin POC",
+        "description": "Audio",
         "icon": "http://localhost:5555/favicon.ico",
-        "name": "Openfin POC"
+        "name": "Audio"
     }
 }
