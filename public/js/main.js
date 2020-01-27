@@ -14,7 +14,7 @@ async function init() {
     const app = await fin.Application.getCurrent();
     const win = await fin.Window.getCurrent();
 
-    const downloadBtn = document.querySelector('#download-btn');
+    const downloadBtn = document.querySelector('#create-win-btn');
     downloadBtn.addEventListener('click', async () => {
         const winV1 = await new fin.desktop.Window({
             uuid: app.me.uuid,
