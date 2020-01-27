@@ -1,20 +1,20 @@
 {
     "startup_app": {
-        "name": "OpenfinPOC",
+        "name": "DownloadCSV",
         "url": "http://localhost:5555/index.html",
-        "uuid": "OpenfinPOC",
+        "uuid": "DownloadCSV",
         "applicationIcon": "http://localhost:5555/favicon.ico",
         "autoShow": true,
         "saveWindowState": true
     },
     "runtime": {
         "arguments": "",
-        "version": "stable"
+        "version": "13.76.45.13"
     },
     "shortcut": {
         "company": "OpenFin",
-        "description": "Openfin POC",
+        "description": "DownloadCSV",
         "icon": "http://localhost:5555/favicon.ico",
-        "name": "Openfin POC"
+        "name": "DownloadCSV"
     }
 }

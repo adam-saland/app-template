@@ -14,6 +14,23 @@ async function init() {
     const app = await fin.Application.getCurrent();
     const win = await fin.Window.getCurrent();
 
+    const downloadBtn = document.querySelector('#download-btn');
+    downloadBtn.addEventListener('click', async () => {
+        const winV1 = await new fin.desktop.Window({
+            uuid: app.me.uuid,
+            name: "child-win-n",
+            autoShow: true,
+            hideOnClose: false,
+            url: "http://localhost:5555/download.html"
+        },
+            (res) => { console.log(res) },
+            (e) => {
+                console.error(e);
+                winV1.bringToFront()
+                winV1.show()
+            }
+        )
+    })
     const ofVersion = document.querySelector('#of-version');
     ofVersion.innerText = await fin.System.getVersion();
 
