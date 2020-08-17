@@ -1,19 +1,33 @@
 {
-    "parser": "babel-eslint",
-    "env": {
-      "browser": {
-        "fs": false,
-        "child_process": false,
-        "net": false
-      },
-      "es6": true,
-      "node": true,
+  "parser": "babel-eslint",
+  "env": {
+    "browser": {
+      "fs": false,
+      "child_process": false,
+      "net": false
     },
-    "extends": ["airbnb", "prettier"],
-    "plugins": ["prettier", "react"],
-    "rules": {
-      "prettier/prettier": ["error"],
-      "import/no-extraneous-dependencies": 0,
-      "react/jsx-filename-extension": 0
-    }
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "airbnb",
+  ],
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "import/no-extraneous-dependencies": 0,
+    "react/jsx-filename-extension": 0,
+    "no-console": 0,
+    "import/no-unresolved": 0,
+    "no-unused-vars": 0,
+    "prettier/prettier": 0,
+    "no-restricted-globals": 0,
+    "react/forbid-prop-types": 0,
+    "react/prop-types": 0,
+    "no-shadow": 0,
+    "no-undef": 0,
+    "react/no-typos": 0,
+    "import/extensions": 0
   }
+}

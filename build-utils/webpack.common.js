@@ -1,7 +1,8 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const OpenFinAdapter = require('hadouken-js-adapter');
 
 module.exports = {
   entry: ['./src/index.js'],
@@ -14,16 +15,40 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    contentBase: './public',
+    after(app, server) {
+      const manifest = `http://localhost:${server.options.port}/public/app.json`;
+      console.log('Launching OpenFin App: ', manifest);
+      OpenFinAdapter.launch({ manifestUrl: manifest });
+    },
+  },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
+      inject: true,
       title: 'Advanced React with Webpack Setup',
       template: './src/public/index.html',
     }),
-    new CopyWebpackPlugin([{ from: './src/public/app.json' }]),
+    new HtmlWebpackPlugin({
+      inject: true,
+      title: 'Advanced React with Webpack Setup',
+      template: './src/public/index.html',
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: './src/public/app.json',
+          to: './public/app.json',
+        },
+      ],
+    }),
+    // new CopyWebpackPlugin([
+    //   { from: './src/public/app.json', to: './dist/public/app.json' },
+    // ]),
   ],
   output: {
     path: path.resolve(__dirname, '../', 'dist'),

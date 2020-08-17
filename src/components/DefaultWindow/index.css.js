@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-export const btn = {
+export const layoutBase = {
   fontSize: '1.4em',
   background: '#504CFF',
   color: 'white',
