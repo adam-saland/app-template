@@ -10,7 +10,7 @@
     }
   },
   "scripts": {
-    "start": "webpack-dev-server --config build-utils/webpack.config.js --env.env=dev",
+    "start": "EXTEND_ESLINT=true webpack-dev-server --config build-utils/webpack.config.js --env.env=dev",
     "launch": "node ./launcher.js",
     "react-devtools": "react-devtools",
     "build": "webpack --config build-utils/webpack.config.js --env.env=prod",
@@ -40,6 +40,7 @@
     "html-webpack-plugin": "latest",
     "http-server": "latest",
     "isomorphic-style-loader": "latest",
+    "mini-css-extract-plugin": "^0.10.0",
     "prettier": "latest",
     "react-devtools": "latest",
     "react-devtools-core": "latest",
@@ -53,12 +54,16 @@
     "webpack-visualizer-plugin": "latest"
   },
   "dependencies": {
+    "@microsoft/fast-components": "^1.8.0",
+    "@microsoft/fast-element": "^0.16.0",
     "@types/openfin": "latest",
     "copy-webpack-plugin": "latest",
     "express": "latest",
     "hadouken-js-adapter": "latest",
+    "lodash-es": "^4.17.15",
     "prop-types": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-use": "^15.3.3"
   }
 }

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import './frame-styles.css';
+import './frame-styles-template.css';
+import './light-theme.css';
 
 function App({ title, fin }) {
   const [version, setVersion] = useState('');

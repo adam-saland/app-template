@@ -9,12 +9,8 @@
     "es6": true,
     "node": true
   },
-  "extends": [
-    "airbnb",
-  ],
-  "plugins": [
-    "react"
-  ],
+  "extends": ["airbnb"],
+  "plugins": ["react"],
   "rules": {
     "import/no-extraneous-dependencies": 0,
     "react/jsx-filename-extension": 0,
@@ -28,6 +24,8 @@
     "no-shadow": 0,
     "no-undef": 0,
     "react/no-typos": 0,
-    "import/extensions": 0
+    "import/extensions": 0,
+    "react/no-unused-expressions": 0,
+    "no-unused-expressions": 0
   }
 }
