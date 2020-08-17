@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import {
   FASTDesignSystemProvider,
@@ -14,13 +15,33 @@ FASTDesignSystemProvider;
 FASTCard;
 FASTButton;
 
+const maxOrRestore = async () => {
+  if (await fin.me.getState() === 'normal') {
+    const maxState = await fin.me.maximize();
+    return maxState;
+  }
+
+  return fin.me.restore();
+};
+
+const titleBar = () => (
+
+  <div id="title-bar" className="title-bar-draggable">
+    <div id="title" />
+  </div>
+);
 export default function DefaultWindow() {
   return (
-    <fast-design-system-provider use-defaults>
-      <fast-card>
-        <h2>FAST React</h2>
-        <fast-button appearance="accent" onClick={() => console.log('clicked')}>Click Me</fast-button>
-      </fast-card>
-    </fast-design-system-provider>
+    <>
+      {/* {titleBar()} */}
+      <div className="left-menu">
+        <fast-design-system-provider use-defaults>
+          <fast-card>
+            <h2>FAST React</h2>
+            <fast-button appearance="accent" onClick={() => console.log('clicked')}>Click Me</fast-button>
+          </fast-card>
+        </fast-design-system-provider>
+      </div>
+    </>
   );
 }

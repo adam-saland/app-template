@@ -38,11 +38,6 @@ module.exports = {
       title: 'Advanced React with Webpack Setup',
       template: './src/public/index.html',
     }),
-    new HtmlWebpackPlugin({
-      inject: true,
-      title: 'Advanced React with Webpack Setup',
-      template: './src/public/index.html',
-    }),
     new MiniCssExtractPlugin(),
     new CopyPlugin({
       patterns: [
@@ -52,9 +47,7 @@ module.exports = {
         },
       ],
     }),
-  // new CopyWebpackPlugin([
-  //   { from: './src/public/app.json', to: './dist/public/app.json' },
-  // ]),
+
   ],
   output: {
     path: path.resolve(__dirname, '../', 'dist'),

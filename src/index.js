@@ -7,7 +7,7 @@ import "./public/frame-styles-template.css"
 import "./public/light-theme.css"
 // import App from './App';
 import LayoutContainer from './components/LayoutContainer';
-// import DefaultWindow from './components/DefaultWindow';
+import DefaultWindow from './components/DefaultWindow';
 
 const title = 'React with Webpack and Babel';
 
@@ -21,7 +21,7 @@ const checkEnv = ({ fin }) => {
 export const CONTAINER_ID = 'layout-container';
 window.addEventListener('DOMContentLoaded', () => {
     // Before .50 AI version this may throw...
-    fin.Platform.Layout.init({containerId: 'app'});
+    fin.Platform.Layout.init({containerId: CONTAINER_ID});
 });
 
 /* ReactDOM.render(
@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('app')
 ); */
 
-// ReactDOM.render(<DefaultWindow />, document.getElementById('default-window'))
+ReactDOM.render(<DefaultWindow />, document.getElementById('default-window'))
 
 ReactDOM.render(<LayoutContainer />, document.getElementById('layout-container'))
 module.hot.accept();

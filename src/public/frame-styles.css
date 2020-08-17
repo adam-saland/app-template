@@ -17,20 +17,20 @@
     display: none;
 }
 
-left-menu {
+.left-menu {
     padding-left: 4px;
     margin-top: 4px;
     padding-right: 4px;
     border-right: 1px solid var(--tab-button-hover-color);
 }
 
-left-menu ul {
+.left-menu ul {
     list-style: none;
     padding-inline-start: 0px;
     margin-block-start: 20px;
 }
 
-left-menu button {
+.left-menu button {
     width: var(--sidebar-width);
     border: none;
     background-color: var(--main-background-color);
@@ -38,12 +38,12 @@ left-menu button {
     text-align: left;
 }
 
-left-menu button:hover {
+.left-menu button:hover {
     cursor: pointer;
     background-color: var(--tab-button-hover-color);
 }
 
-left-menu button:focus {
+.left-menu button:focus {
     outline: 1px solid var(--tab-button-active-color);
 }
 
