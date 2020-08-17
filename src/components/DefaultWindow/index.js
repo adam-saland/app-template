@@ -5,7 +5,6 @@ import {
   FASTButton,
 } from '@microsoft/fast-components';
 import './index.css';
-// import { fastStyles } from './index.css.js';
 
 /*
  * Ensure that tree-shaking doesn't remove these components from the bundle.
