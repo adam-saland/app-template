@@ -1,31 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import './frame-styles.css';
-import './frame-styles-template.css';
-import './light-theme.css';
+import './public/frame-styles.css';
+import './public/frame-styles-template.css';
+import './public/light-theme.css';
+import DefaultWindow from './components/DefaultWindow';
 
-function App({ title, fin }) {
-  const [version, setVersion] = useState('');
+function App() {
+  const CONTAINER_ID = 'layout-container';
   useEffect(() => {
-    (async () => {
-      const v = await fin.System.getVersion();
-      setVersion(v);
-    })();
+    window.fin && window.addEventListener('DOMContentLoaded', () => {
+      // Before .50 AI version this may throw...
+      fin.Platform.Layout.init({ containerId: CONTAINER_ID });
+    });
   }, []);
   return (
-    <div className="main">
-      <h1>{title}</h1>
-      <h3>
-        Version:
-        {version}
-      </h3>
-    </div>
+    <DefaultWindow />
   );
 }
-
-App.propTypes = {
-  title: PropTypes.string.isRequired,
-  fin: PropTypes.object.isRequired,
-};
 
 export default App;

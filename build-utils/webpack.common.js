@@ -29,7 +29,7 @@ module.exports = {
     },
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx', '.css'],
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -38,16 +38,19 @@ module.exports = {
       title: 'Advanced React with Webpack Setup',
       template: './src/public/index.html',
     }),
-    new MiniCssExtractPlugin(),
     new CopyPlugin({
       patterns: [
         {
           from: './src/public/app.json',
           to: './public/app.json',
         },
+        {
+          from: './src/public/*.css',
+          to: './public/*.css',
+        },
       ],
     }),
-
+    new MiniCssExtractPlugin(),
   ],
   output: {
     path: path.resolve(__dirname, '../', 'dist'),
